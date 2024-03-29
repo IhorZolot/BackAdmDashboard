@@ -1,9 +1,8 @@
 import mongoose from 'mongoose'
+import { DB_HOST } from './config.js'
 
 import app from './app.js'
-//rPhltpjtjvU97VU5
-const DB_HOST =
-	'mongodb+srv://Ihor:rPhltpjtjvU97VU5@cluster0.mpwnoo8.mongodb.net/admin-pharmacy?retryWrites=true&w=majority&appName=Cluster0'
+
 mongoose
 	.connect(DB_HOST)
 	.then(() => {
