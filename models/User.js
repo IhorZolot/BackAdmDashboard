@@ -25,6 +25,10 @@ userSchema.post('save', handleSaveError)
 userSchema.pre('findOneAndUpdate', preUpdate)
 userSchema.post('findOneAndUpdate', handleSaveError)
 
+export const userSingupSchema = Joi.object({
+	email: Joi.string().pattern(emailRegexp).required(),
+	password: Joi.string().min(6).required(),
+})
 export const userSinginSchema = Joi.object({
 	email: Joi.string().pattern(emailRegexp).required(),
 	password: Joi.string().min(6).required(),
