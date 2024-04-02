@@ -4,6 +4,7 @@ import cors from 'cors'
 import 'dotenv/config'
 
 import authRouter from './routes/api/auth-routes.js'
+import customersRouter from './routes/api/customer-routes.js'
 
 const app = express()
 
@@ -14,7 +15,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/auth', authRouter)
-
+app.use('/api/customers', customersRouter)
 app.get('/', (req, res) => {
 	res.json([])
 	console.log(res)
