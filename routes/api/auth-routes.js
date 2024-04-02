@@ -6,5 +6,6 @@ import { userSingupSchema, userSinginSchema } from '../../models/User.js'
 const authRouter = express.Router()
 
 authRouter.post('/singup', validateBody(userSingupSchema), authController.singup)
+authRouter.post('/singin', validateBody(userSinginSchema), authController.singin)
 
 export default authRouter
