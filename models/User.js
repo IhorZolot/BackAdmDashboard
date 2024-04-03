@@ -17,6 +17,9 @@ const userSchema = new Schema(
 			minlength: 6,
 			required: true,
 		},
+		token: {
+			type: String,
+		},
 	},
 	{ versionKey: false, timestamps: true }
 )
@@ -25,11 +28,11 @@ userSchema.post('save', handleSaveError)
 userSchema.pre('findOneAndUpdate', preUpdate)
 userSchema.post('findOneAndUpdate', handleSaveError)
 
-export const userSingupSchema = Joi.object({
+export const userSignupSchema = Joi.object({
 	email: Joi.string().pattern(emailRegexp).required(),
 	password: Joi.string().min(6).required(),
 })
-export const userSinginSchema = Joi.object({
+export const userSigninSchema = Joi.object({
 	email: Joi.string().pattern(emailRegexp).required(),
 	password: Joi.string().min(6).required(),
 })
