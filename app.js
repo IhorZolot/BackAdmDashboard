@@ -5,7 +5,6 @@ import 'dotenv/config'
 
 import authRouter from './routes/api/auth-routes.js'
 import customersRouter from './routes/api/customer-routes.js'
-
 const app = express()
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'

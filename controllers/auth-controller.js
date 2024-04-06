@@ -6,7 +6,7 @@ import { HttpError } from '../helpers/index.js'
 import { ctrlWrapper } from '../decorators/index.js'
 
 const { JWT_SECRET } = process.env
-
+console.log(process.env.JWT_SECRET)
 const signup = async (req, res) => {
 	const { email, password } = req.body
 	const user = await User.findOne({ email })
@@ -34,8 +34,7 @@ const signin = async (req, res) => {
 	}
 	const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '64d' })
 	await User.findByIdAndUpdate(user._id, { token })
-
-	res.json({ token })
+	res.json({ token, email: user.email })
 }
 const getCurrent = async (req, res) => {
 	const { username, email } = req.user
