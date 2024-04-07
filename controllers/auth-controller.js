@@ -36,7 +36,7 @@ const signin = async (req, res) => {
 	await User.findByIdAndUpdate(user._id, { token })
 	res.json({ token, email: user.email })
 }
-const getCurrent = async (req, res) => {
+const getUserInfo = async (req, res) => {
 	const { username, email } = req.user
 	res.json({ username, email })
 }
@@ -52,5 +52,5 @@ export default {
 	signup: ctrlWrapper(signup),
 	signin: ctrlWrapper(signin),
 	signout: ctrlWrapper(signout),
-	getCurrent: ctrlWrapper(getCurrent),
+	getUserInfo: ctrlWrapper(getUserInfo),
 }

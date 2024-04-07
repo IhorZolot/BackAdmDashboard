@@ -8,7 +8,8 @@ const authRouter = express.Router()
 
 authRouter.post('/signup', validateBody(userSignupSchema), authController.signup)
 authRouter.post('/signin', validateBody(userSigninSchema), authController.signin)
-authRouter.get('/current', authenticate, authController.getCurrent)
+
+authRouter.get('/user-info', authenticate, authController.getUserInfo)
 authRouter.post('/signout', authenticate, authController.signout)
 
 export default authRouter
