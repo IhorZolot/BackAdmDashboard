@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-// import { DB_HOST } from './config.js'
 import app from './app.js'
 
 mongoose
