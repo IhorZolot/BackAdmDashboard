@@ -6,8 +6,8 @@ import { isValidId } from '../../middlewares/index.js'
 
 const productsRouter = express.Router()
 
-productsRouter.get('/', productsController.getAll)
-productsRouter.get('/:id', isValidId, productsController.getById)
+productsRouter.get('/', productsController.getProductAll)
+productsRouter.get('/:id', isValidId, productsController.getProductById)
 productsRouter.post('/', validateBody(productAddSchema), productsController.addProduct)
 productsRouter.put('/:id', isValidId, validateBody(productUpdateSchema), productsController.updateProductById)
 productsRouter.delete('/:id', isValidId, productsController.deleteProductById)

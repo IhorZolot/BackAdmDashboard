@@ -2,14 +2,24 @@ import Customer from '../models/Customer.js'
 import { HttpError } from '../helpers/index.js'
 import { ctrlWrapper } from '../decorators/index.js'
 
-const getAll = async (req, res) => {
-	// const { _id: owner } = req.user
+const getCustomerAll = async (req, res) => {
 	const { page = 1, limit = 5 } = req.query
 	const skip = (page - 1) * limit
-	const result = await Customer.find({}, '-createdAt -updatedAt', { skip, limit }).populate('owner', 'username email')
+	const result = await Customer.find({}, '-createdAt -updatedAt', { skip, limit })
 	res.json(result)
+}
+const getCustomerById = async (req, res) => {
+	const { id } = req.params
+	const result = await Customer.findById(id)
+	console.log(result)
+	if (!result) {
+		throw HttpError(404, `Customer with id=${id} not found`)
+	}
+	res.json(result)
+	console.log(result)
 }
 
 export default {
-	getAll: ctrlWrapper(getAll),
+	getCustomerAll: ctrlWrapper(getCustomerAll),
+	getCustomerById: ctrlWrapper(getCustomerById),
 }

@@ -29,6 +29,11 @@ const productSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: 'product',
+			required: true,
+		},
 	},
 	{ versionKey: false, timestamps: true }
 )
@@ -52,5 +57,5 @@ export const productUpdateSchema = Joi.object({
 	category: Joi.string(),
 })
 
-const Product = model('Product', productSchema)
+const Product = model('product', productSchema)
 export default Product
