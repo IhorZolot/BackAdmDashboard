@@ -29,9 +29,6 @@ const customerSchema = new Schema({
 		type: String,
 	},
 })
-customerSchema.post('save', handleSaveError)
-customerSchema.pre('findOneAndUpdate', preUpdate)
-customerSchema.post('findOneAndUpdate', handleSaveError)
 
 const Customer = model('customer', customerSchema)
 

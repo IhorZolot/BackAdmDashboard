@@ -3,7 +3,8 @@ import { HttpError } from '../helpers/index.js'
 import { ctrlWrapper } from '../decorators/index.js'
 
 const getOrderAll = async (req, res) => {
-	const result = await Order.find()
+	const { _id: owner } = req.user
+	const result = await Order.find({ owner }, '-createdAt -updatedAt').populate('owner', ' username email')
 	res.json(result)
 }
 const getOrderByFilter = async (req, res) => {

@@ -3,7 +3,8 @@ import { HttpError } from '../helpers/index.js'
 import { ctrlWrapper } from '../decorators/index.js'
 
 const getProductAll = async (req, res) => {
-	const result = await Product.find()
+	const { _id: owner } = req.user
+	const result = await Product.find({ owner }, '-createdAt -updatedAt').populate('owner', ' username email')
 	res.json(result)
 }
 const getProductById = async (req, res) => {

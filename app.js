@@ -4,6 +4,7 @@ import cors from 'cors'
 import 'dotenv/config'
 
 import authRouter from './routes/api/auth-routes.js'
+import dashboardRouter from './routes/api/dashboard-routes.js'
 import customersRouter from './routes/api/customers-routes.js'
 import productsRouter from './routes/api/products-routes.js'
 import ordersRouter from './routes/api/orders-routes.js'
@@ -17,6 +18,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/user', authRouter)
+app.use('/api/dashboard', dashboardRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/customers', customersRouter)
 app.use('/api/orders', ordersRouter)

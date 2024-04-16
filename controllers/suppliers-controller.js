@@ -1,9 +1,10 @@
-import Supplier from '../models/Suppliers.js'
+import Supplier from '../models/Supplier.js'
 import { HttpError } from '../helpers/index.js'
 import { ctrlWrapper } from '../decorators/index.js'
 
 const getSupplierAll = async (req, res) => {
-	const result = await Supplier.find()
+	const { _id: owner } = req.user
+	const result = await Supplier.find({ owner }, '-createdAt -updatedAt').populate('owner', ' username email')
 	res.json(result)
 }
 const addSupplier = async (req, res) => {
