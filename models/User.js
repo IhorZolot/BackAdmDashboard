@@ -24,9 +24,6 @@ const userSchema = new Schema(
 		token: {
 			type: String,
 		},
-		// verificationToken: {
-		// 	type: String,
-		// },
 	},
 	{ versionKey: false, timestamps: true }
 )

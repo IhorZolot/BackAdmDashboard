@@ -14,8 +14,6 @@ const getCustomerAll = async (req, res) => {
 }
 const getCustomerById = async (req, res) => {
 	const { id } = req.params
-	// const { _id, owner } = req.user
-	// const result = await Customer.findOne({ _id: id, owner })
 	const result = await Customer.findById(id)
 	if (!result) {
 		throw HttpError(404, `Customer with id=${id} not found`)
