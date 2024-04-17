@@ -7,8 +7,8 @@ import { authenticate } from '../../middlewares/index.js'
 const authRouter = express.Router()
 
 authRouter.post('/signup', validateBody(userSignupSchema), authController.signup)
-authRouter.post('/signin', validateBody(userSigninSchema), authController.signin)
+authRouter.post('/login', validateBody(userSigninSchema), authController.signin)
 authRouter.get('/user-info', authenticate, authController.getUserInfo)
-authRouter.post('/signout', authenticate, authController.signout)
+authRouter.post('/logout', authenticate, authController.signout)
 
 export default authRouter
