@@ -10,8 +10,8 @@ productsRouter.use(authenticate)
 productsRouter.get('/', productsController.getProductAll)
 productsRouter.get('/categories', productsController.getCategoryAll)
 productsRouter.get('/:id', isValidId, productsController.getProductById)
-productsRouter.post('/', validateBody(productAddSchema), productsController.addProduct)
-productsRouter.put('/:id', isValidId, validateBody(productUpdateSchema), productsController.updateProductById)
-productsRouter.delete('/:id', isValidId, productsController.deleteProductById)
+productsRouter.post('/add', validateBody(productAddSchema), productsController.addProduct)
+productsRouter.put('update/:id', isValidId, validateBody(productUpdateSchema), productsController.updateProductById)
+productsRouter.delete('remove/:id', isValidId, productsController.deleteProductById)
 
 export default productsRouter
