@@ -16,14 +16,14 @@ const getDashboardAll = async (req, res) => {
 	// const customerCountAll = await Customer.find({}, 'name email spent address', { skip, limit })
 
 	const customerCountAll = await Customer.find({}, '-createdAt -updatedAt', { skip, limit })
-	const IncomeExpensesResult = await IncomeExpenses.find({}, '-createdAt -updatedAt', { skip, limit: 6 })
+	const incomeExpensesResult = await IncomeExpenses.find({}, '-createdAt -updatedAt', { skip, limit: 6 })
 
 	const dashboardData = {
 		productCount,
 		customerCount,
 		supplierCount,
 		customerCountAll,
-		IncomeExpensesResult,
+		incomeExpensesResult,
 	}
 
 	res.json(dashboardData)

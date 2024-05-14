@@ -3,13 +3,13 @@ import { HttpError } from '../helpers/index.js'
 import { ctrlWrapper } from '../decorators/index.js'
 
 const getSupplierAll = async (req, res) => {
-	const { _id: owner } = req.user
-	const result = await Supplier.find({ owner }, '-createdAt -updatedAt').populate('owner', ' username email')
+	const { page = 1, limit = 5 } = req.query
+	const skip = (page - 1) * limit
+	const result = await Supplier.find({}, '-createdAt -updatedAt', { skip, limit })
 	res.json(result)
 }
 const addSupplier = async (req, res) => {
-	const { _id: owner } = req.user
-	const result = await Supplier.create(...req.body, owner)
+	const result = await Supplier.create(req.body)
 	res.status(201).json(result)
 }
 

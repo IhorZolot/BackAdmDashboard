@@ -3,9 +3,14 @@ import { HttpError } from '../helpers/index.js'
 import { ctrlWrapper } from '../decorators/index.js'
 
 const getProductAll = async (req, res) => {
-	const { _id: owner } = req.user
-	const result = await Product.find({ owner }, '-createdAt -updatedAt').populate('owner', ' username email')
+	const { page = 1, limit = 5 } = req.query
+	const skip = (page - 1) * limit
+	const result = await Product.find({}, '-createdAt -updatedAt', { skip, limit })
 	res.json(result)
+}
+const getCategoryAll = async (req, res) => {
+	const result = await Product.find({}, 'category')
+	res.json([...new Set(result.map(item => item.category))])
 }
 const getProductById = async (req, res) => {
 	const { id } = req.params
@@ -16,8 +21,7 @@ const getProductById = async (req, res) => {
 	res.json(result)
 }
 const addProduct = async (req, res) => {
-	const { _id: owner } = req.user
-	const result = await Product.create(...req.body, owner)
+	const result = await Product.create(req.body)
 	res.status(201).json(result)
 }
 const updateProductById = async (req, res) => {
@@ -43,4 +47,5 @@ export default {
 	addProduct: ctrlWrapper(addProduct),
 	updateProductById: ctrlWrapper(updateProductById),
 	deleteProductById: ctrlWrapper(deleteProductById),
+	getCategoryAll: ctrlWrapper(getCategoryAll),
 }

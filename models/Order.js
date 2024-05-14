@@ -29,11 +29,6 @@ const orderSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	owner: {
-		type: Schema.Types.ObjectId,
-		ref: 'product',
-		required: true,
-	},
 })
 
 const Order = model('order', orderSchema)

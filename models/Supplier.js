@@ -25,12 +25,7 @@ const suppliersSchema = new Schema(
 			required: true,
 		},
 		status: {
-			type: Boolean,
-			required: true,
-		},
-		owner: {
-			type: Schema.Types.ObjectId,
-			ref: 'supplier',
+			type: String,
 			required: true,
 		},
 	},
