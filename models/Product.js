@@ -7,7 +7,7 @@ const productSchema = new Schema(
 	{
 		photo: {
 			type: String,
-			required: true,
+			// required: true,
 		},
 		name: {
 			type: String,
@@ -29,11 +29,6 @@ const productSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		// owner: {
-		// 	type: Schema.Types.ObjectId,
-		// 	ref: 'product',
-		// 	required: true,
-		// },
 	},
 	{ versionKey: false, timestamps: true }
 )
@@ -42,7 +37,7 @@ productSchema.pre('findOneAndUpdate', preUpdate)
 productSchema.post('findOneAndUpdate', handleSaveError)
 
 export const productAddSchema = Joi.object({
-	photo: Joi.string().required(),
+	photo: Joi.string(),
 	name: Joi.string().required(),
 	suppliers: Joi.string().required(),
 	stock: Joi.number().required(),

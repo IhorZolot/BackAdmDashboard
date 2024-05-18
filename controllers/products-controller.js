@@ -26,18 +26,22 @@ const addProduct = async (req, res) => {
 }
 const updateProductById = async (req, res) => {
 	const { id } = req.params
+	console.log(id)
 	const result = await Product.findByIdAndUpdate(id, req.body)
 	if (!result) {
+		console.log(req.body)
 		throw HttpError(404, `Product with id=${id} not found`)
 	}
 	res.json(result)
 }
 const deleteProductById = async (req, res) => {
 	const { id } = req.params
+	console.log(`Attempting to delete product with id=${id}`)
 	const result = await Product.findByIdAndDelete(id)
 	if (!result) {
 		throw HttpError(404, `Product with id=${id} not found`)
 	}
+	console.log(id)
 	res.json({ message: 'Delete success' })
 }
 
