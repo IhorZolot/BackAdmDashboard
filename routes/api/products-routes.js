@@ -8,10 +8,13 @@ const productsRouter = express.Router()
 productsRouter.use(authenticate)
 
 productsRouter.get('/', productsController.getProductAll)
+productsRouter.get('/filtered', productsController.getFilteredAndSortedProducts)
 productsRouter.get('/categories', productsController.getCategoryAll)
 productsRouter.get('/:id', isValidId, productsController.getProductById)
 productsRouter.post('/add', validateBody(productAddSchema), productsController.addProduct)
-productsRouter.put('/update/:id', isValidId, validateBody(productUpdateSchema), productsController.updateProductById)
+productsRouter.put('/update/:id', isValidId, productsController.updateProductById)
 productsRouter.delete('/remove/:id', isValidId, productsController.deleteProductById)
 
 export default productsRouter
+
+// validateBody(productUpdateSchema),

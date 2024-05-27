@@ -12,17 +12,18 @@ const getOrderAll = async (req, res) => {
 }
 
 const getFilteredAndSortedOrders = async (req, res) => {
-	const { sortField, sortOrder, filterField, filterValue } = req.query
+	const { sortField, sortValue, filterField, filterValue } = req.query
 
 	const filterConditions = {}
 	if (filterField && filterValue) {
 		filterConditions[filterField] = { $regex: filterValue, $options: 'i' }
 	}
 	const sortOptions = {}
-	if (sortField && ['asc', 'desc'].includes(sortOrder)) {
-		sortOptions[sortField] = sortOrder === 'asc' ? 1 : -1
+	if (sortField && ['asc', 'desc'].includes(sortValue)) {
+		sortOptions[sortField] = sortValue === 'asc' ? 1 : -1
 	}
-	const orders = await Order.find(filterConditions)
+	const orders = await Order.find(filterConditions).sort(sortOptions)
+
 	res.json(orders)
 }
 

@@ -8,4 +8,5 @@ ordersRouter.use(authenticate)
 ordersRouter.get('/', ordersController.getOrderAll)
 ordersRouter.get('/filtered', ordersController.getFilteredAndSortedOrders)
 ordersRouter.get('/:id', isValidId, ordersController.getOrderByFilter)
+
 export default ordersRouter

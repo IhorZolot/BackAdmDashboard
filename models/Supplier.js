@@ -17,11 +17,11 @@ const suppliersSchema = new Schema(
 			required: true,
 		},
 		date: {
-			type: String,
+			type: Date,
 			required: true,
 		},
 		amount: {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		status: {
@@ -39,17 +39,17 @@ export const suppliersAddSchema = Joi.object({
 	name: Joi.string().required(),
 	address: Joi.string().required(),
 	suppliers: Joi.string().required(),
-	date: Joi.string().required(),
-	amount: Joi.number().required(),
-	status: Joi.boolean().required(),
+	date: Joi.date().required(),
+	amount: Joi.string().required(),
+	status: Joi.string().required(),
 })
 export const suppliersUpdateSchema = Joi.object({
 	name: Joi.string(),
 	address: Joi.string(),
 	suppliers: Joi.string(),
-	date: Joi.string(),
-	amount: Joi.number(),
-	status: Joi.boolean(),
+	date: Joi.date(),
+	amount: Joi.string(),
+	status: Joi.string(),
 })
 const Supplier = model('supplier', suppliersSchema)
 export default Supplier

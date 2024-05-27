@@ -6,7 +6,9 @@ const getProductAll = async (req, res) => {
 	const { page = 1, limit = 5 } = req.query
 	const skip = (page - 1) * limit
 	const result = await Product.find({}, '-createdAt -updatedAt', { skip, limit })
-	res.json(result)
+	const total = await Product.countDocuments()
+	const totalPages = Math.ceil(total / limit)
+	res.json({ data: result, pages: totalPages, currentPage: parseInt(page), perPage: parseInt(limit) })
 }
 const getCategoryAll = async (req, res) => {
 	const result = await Product.find({}, 'category')
@@ -26,8 +28,8 @@ const addProduct = async (req, res) => {
 }
 const updateProductById = async (req, res) => {
 	const { id } = req.params
-	console.log(id)
-	const result = await Product.findByIdAndUpdate(id, req.body)
+
+	const result = await Product.findByIdAndUpdate(id, req.body, { new: true })
 	if (!result) {
 		console.log(req.body)
 		throw HttpError(404, `Product with id=${id} not found`)
@@ -44,6 +46,20 @@ const deleteProductById = async (req, res) => {
 	console.log(id)
 	res.json({ message: 'Delete success' })
 }
+const getFilteredAndSortedProducts = async (req, res) => {
+	const { sortField, sortValue, filterField, filterValue } = req.query
+
+	const filterConditions = {}
+	if (filterField && filterValue) {
+		filterConditions[filterField] = { $regex: filterValue, $options: 'i' }
+	}
+	const sortOptions = {}
+	if (sortField && ['asc', 'desc'].includes(sortValue)) {
+		sortOptions[sortField] = sortValue === 'asc' ? 1 : -1
+	}
+	const products = await Product.find(filterConditions).sort(sortOptions)
+	res.json(products)
+}
 
 export default {
 	getProductAll: ctrlWrapper(getProductAll),
@@ -52,4 +68,5 @@ export default {
 	updateProductById: ctrlWrapper(updateProductById),
 	deleteProductById: ctrlWrapper(deleteProductById),
 	getCategoryAll: ctrlWrapper(getCategoryAll),
+	getFilteredAndSortedProducts: ctrlWrapper(getFilteredAndSortedProducts),
 }

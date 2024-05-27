@@ -6,6 +6,7 @@ const customersRouter = express.Router()
 customersRouter.use(authenticate)
 
 customersRouter.get('/', customersController.getCustomerAll)
-customersRouter.get('/:id', isValidId, customersController.getCustomerById)
+customersRouter.get('/filtered', customersController.getFilteredAndSortedCustomers),
+	customersRouter.get('/:id', isValidId, customersController.getCustomerById)
 
 export default customersRouter
