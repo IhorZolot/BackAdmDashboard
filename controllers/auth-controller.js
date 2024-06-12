@@ -44,8 +44,8 @@ const signin = async (req, res) => {
 	res.json({ token, email: user.email })
 }
 const getUserInfo = async (req, res) => {
-	const { username, email } = req.user
-	res.json({ username, email })
+	const { name, email } = req.user
+	res.json({ name, email })
 }
 const signout = async (req, res) => {
 	const { _id } = req.user
