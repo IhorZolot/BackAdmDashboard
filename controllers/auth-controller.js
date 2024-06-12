@@ -22,7 +22,7 @@ const signup = async (req, res) => {
 	const newUser = await User.create({ ...req.body, password: hashPassword, verificationToken })
 
 	res.status(201).json({
-		username: newUser.name,
+		name: newUser.name,
 		email: newUser.email,
 	})
 }
