@@ -47,7 +47,11 @@ const deleteProductById = async (req, res) => {
 	res.json({ message: 'Delete success' })
 }
 const getFilteredAndSortedProducts = async (req, res) => {
-	const { sortField, sortValue, filterField, filterValue } = req.query
+	const { sortField, sortValue, filterField, filterValue, page = 1, limit = 5 } = req.query
+
+	const pageInt = parseInt(page);
+	const limitInt = parseInt(limit);
+	const skip = (pageInt - 1) * limitInt;
 
 	const filterConditions = {}
 	if (filterField && filterValue) {
@@ -57,8 +61,17 @@ const getFilteredAndSortedProducts = async (req, res) => {
 	if (sortField && ['asc', 'desc'].includes(sortValue)) {
 		sortOptions[sortField] = sortValue === 'asc' ? 1 : -1
 	}
-	const products = await Product.find(filterConditions).sort(sortOptions)
-	res.json(products)
+
+	const totalProducts = await Product.countDocuments(filterConditions);
+	const totalPages = Math.ceil(totalProducts / limitInt);
+
+	const products = await Product.find(filterConditions, '-createdAt -updatedAt').sort(sortOptions).skip(skip).limit(limitInt)
+	res.json({
+		data: products,
+		totalPages,
+		currentPage: pageInt,
+		perPage: limitInt
+	})
 }
 
 export default {

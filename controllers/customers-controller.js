@@ -21,7 +21,11 @@ const getCustomerById = async (req, res) => {
 }
 
 const getFilteredAndSortedCustomers = async (req, res) => {
-	const { filterField, filterValue, sortField, sortValue } = req.query
+	const { filterField, filterValue, sortField, sortValue, page=1, limit=5  } = req.query
+
+	const pageInt = parseInt(page);
+	const limitInt = parseInt(limit);
+	const skip = (pageInt - 1) * limitInt;
 
 	const filterConditions = {}
 	if (filterField && filterValue) {
@@ -31,9 +35,21 @@ const getFilteredAndSortedCustomers = async (req, res) => {
 	if (sortField && ['asc', 'desc'].includes(sortValue)) {
 		sortOptions[sortField] = sortValue === 'asc' ? 1 : -1
 	}
-	const customers = await Customer.find(filterConditions).sort(sortOptions)
 
-	res.json(customers)
+	const totalCustomers = await Customer.countDocuments(filterConditions);
+    const totalPages = Math.ceil(totalCustomers / limitInt);
+
+		const customers = await Customer.find(filterConditions, '-createdAt -updatedAt')
+		.sort(sortOptions)
+		.skip(skip)
+		.limit(limitInt);
+
+		res.json({
+			data: customers,
+			totalPages,
+			currentPage: pageInt,
+			perPage: limitInt
+	});
 }
 
 export default {

@@ -12,7 +12,11 @@ const getOrderAll = async (req, res) => {
 }
 
 const getFilteredAndSortedOrders = async (req, res) => {
-	const { sortField, sortValue, filterField, filterValue } = req.query
+	const { sortField, sortValue, filterField, filterValue, page = 1, limit = 5 } = req.query
+
+	const pageInt = parseInt(page);
+	const limitInt = parseInt(limit);
+	const skip = (pageInt - 1) * limitInt;
 
 	const filterConditions = {}
 	if (filterField && filterValue) {
@@ -22,9 +26,18 @@ const getFilteredAndSortedOrders = async (req, res) => {
 	if (sortField && ['asc', 'desc'].includes(sortValue)) {
 		sortOptions[sortField] = sortValue === 'asc' ? 1 : -1
 	}
-	const orders = await Order.find(filterConditions).sort(sortOptions)
 
-	res.json(orders)
+	const totalOrders = await Order.countDocuments(filterConditions);
+		const totalPages = Math.ceil(totalOrders / limitInt);
+
+	const orders = await Order.find(filterConditions, '-createdAt -updatedAt').sort(sortOptions).skip(skip).limit(limitInt)
+
+	res.json({
+		data: orders,
+		totalPages,
+		currentPage: pageInt,
+		perPage: limitInt
+	})
 }
 
 const getOrderByFilter = async (req, res) => {

@@ -12,7 +12,11 @@ const getSupplierAll = async (req, res) => {
 	res.json({ data: result, pages: totalPages, currentPage: parseInt(page), perPage: parseInt(limit) })
 }
 const getFilteredAndSortedSuppliers = async (req, res) => {
-	const { filterField, filterValue, sortField, sortValue } = req.query
+	const { filterField, filterValue, sortField, sortValue, page = 1, limit = 5 } = req.query
+
+	const pageInt = parseInt(page);
+	const limitInt = parseInt(limit);
+	const skip = (pageInt - 1) * limitInt;
 
 	const filterConditions = {}
 	if (filterField && filterValue) {
@@ -22,9 +26,17 @@ const getFilteredAndSortedSuppliers = async (req, res) => {
 	if (sortField && ['asc', 'desc'].includes(sortValue)) {
 		sortOptions[sortField] = sortValue === 'asc' ? 1 : -1
 	}
-	const suppliers = await Supplier.find(filterConditions).sort(sortOptions)
 
-	res.json(suppliers)
+	const totalSuppliers = await Supplier.countDocuments(filterConditions);
+	const totalPages = Math.ceil(totalSuppliers / limitInt);
+	const suppliers = await Supplier.find(filterConditions, '-createdAt -updatedAt').sort(sortOptions).skip(skip).limit(limitInt)
+
+	res.json({
+		data: suppliers,
+		totalPages,
+		currentPage: pageInt,
+		perPage: limitInt
+	})
 }
 const getStatusSuppliers = async (req, res) => {
 	const result = await Supplier.find({}, 'status').lean()
