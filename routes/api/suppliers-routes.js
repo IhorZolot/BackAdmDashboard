@@ -11,12 +11,8 @@ suppliersRouter.get('/', suppliersController.getSupplierAll)
 suppliersRouter.get('/filtered', suppliersController.getFilteredAndSortedSuppliers)
 suppliersRouter.get('/status', suppliersController.getStatusSuppliers)
 suppliersRouter.post('/add', validateBody(suppliersAddSchema), suppliersController.addSupplier)
-suppliersRouter.put(
-	'/update/:id',
-	isValidId,
-	// validateBody(suppliersUpdateSchema),
-	suppliersController.updateSupplierById
-)
+suppliersRouter.put('/update/:id', isValidId, validateBody(suppliersUpdateSchema),
+suppliersController.updateSupplierById)
 suppliersRouter.delete('/remove/:id', isValidId, suppliersController.deleteSupplierById)
 
 export default suppliersRouter
