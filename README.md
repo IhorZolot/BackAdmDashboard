@@ -88,7 +88,7 @@ npm run start
 
 #### Модель користувача
 
-```javascript
+```
 const userSchema = new Schema(
 	{
 		name: {
@@ -116,7 +116,7 @@ const userSchema = new Schema(
 
 #### Модель продукту
 
-```javascript
+```
 const productSchema = new Schema(
 	{
 		photo: {
@@ -149,7 +149,7 @@ const productSchema = new Schema(
 
 #### Модель постачальника
 
-```javascript
+```
 const suppliersSchema = new Schema(
 	{
 		name: {
@@ -183,7 +183,7 @@ const suppliersSchema = new Schema(
 
 #### Модель клієнта
 
-```javascript
+```
 const customerSchema = new Schema(
 	{
 		photo: {
@@ -217,7 +217,7 @@ const customerSchema = new Schema(
 
 #### Модель замовлення
 
-```javascript
+```
 const orderSchema = new Schema({
 	photo: {
 		type: String,
@@ -269,4 +269,4 @@ const orderSchema = new Schema({
 | nanoid       | Генератор унікальних рядків ідентифікаторів                                          |
 | yargs        | Інструмент для парсингу аргументів командного рядка у Node.js                        |
 
-- [Ihor Zolotoverkh](www.linkedin.com/in/ihor-zolotoverkh)
+[Ihor Zolotoverkh](www.linkedin.com/in/ihor-zolotoverkh)
