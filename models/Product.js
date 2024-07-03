@@ -17,11 +17,11 @@ const productSchema = new Schema(
 			required: true,
 		},
 		stock: {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		price: {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		category: {
@@ -39,16 +39,16 @@ export const productAddSchema = Joi.object({
 	photo: Joi.string().uri().optional(),
 	name: Joi.string().required(),
 	suppliers: Joi.string().required(),
-	stock: Joi.number().required(),
-	price: Joi.number().required(),
+	stock: Joi.string().required(),
+	price: Joi.string().required(),
 	category: Joi.string().required(),
 })
 export const productUpdateSchema = Joi.object({
 	photo: Joi.string().uri().optional(),
 	name: Joi.string().optional(),
 	suppliers: Joi.string().optional(),
-	stock: Joi.number().optional(),
-	price: Joi.number().optional(),
+	stock: Joi.string().optional(),
+	price: Joi.string().optional(),
 	category: Joi.string().optional(),
 })
 
