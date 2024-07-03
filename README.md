@@ -13,7 +13,11 @@
 ### Встановлення
 
 - Клонування репозиторію:
-  `git clone https://github.com/IhorZolot/BackAdmDashboard.git`
+
+  ```
+  git clone https://github.com/IhorZolot/BackAdmDashboard.git
+  ```
+
 - Перейти у відповідну папку: `cd BackAdmDashboard`
 - Встановити залежності використовуючи менеджер пакетів npm: `npm install`
 
